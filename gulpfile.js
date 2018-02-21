@@ -4,6 +4,7 @@ const livereload = require('gulp-livereload');
 const concat = require('gulp-concat');
 const minifyCss = require('gulp-minify-css');
 const autoprefixer = require('gulp-autoprefixer');
+const sourcemaps = require('gulp-sourcemaps');
 
 //File paths
 const DIST_PATH = 'public/dist'
@@ -15,9 +16,11 @@ gulp.task('styles',() => {
   console.log('Starting styles task');
 
   return gulp.src(['public/css/reset.css',CSS_PATH])
+      .pipe(sourcemaps.init())
       .pipe(autoprefixer())
       .pipe(concat('styles.css'))
       .pipe(minifyCss())
+      .pipe(sourcemaps.write())
       .pipe(gulp.dest(DIST_PATH))
       .pipe(livereload());
 });
